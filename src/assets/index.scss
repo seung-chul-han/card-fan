@@ -1,0 +1,38 @@
+@use 'sass:math';
+
+body {
+	margin: 0;
+}
+
+@mixin fan($count, $angle) {
+	@for $i from 1 through $count {
+		&:nth-child(#{$i}) {
+			transform: translate(-50%, -50%)
+				rotate(math.div(-$angle, 2) + math.div($angle, ($count + 1)) * $i);
+		}
+	}
+}
+
+.cards {
+	position: relative;
+	height: 100vh;
+}
+
+.card {
+	position: absolute;
+	box-shadow: 0 0 30px transparentize($color: #000, $amount: 0.8);
+	left: 50%;
+	top: 50%;
+	height: 200px;
+	width: 150px;
+	border-radius: 5px;
+	background-color: #fff;
+	transform-origin: center 280%;
+	transition: all 0.34s;
+
+	@include fan(10, 90deg);
+
+	&:hover {
+		@include fan(10, 100deg);
+	}
+}
